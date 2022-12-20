@@ -136,3 +136,31 @@ describe('click random tab 2', () => {
     }
   });
 });
+
+describe.each([
+  ["back"],
+  ["forward"],
+])('navigate %s', (navigation) => {
+  let currentTab, nextTab
+
+  beforeAll(() => {
+    currentTab = navigation === "back" ? global.tab2 : global.tab1;
+    nextTab =  navigation === "back" ? global.tab1 : global.tab2;
+  })
+
+  test('assign new location', () => {
+    location.assign(`${location.origin}/${nextTab.hash}`);
+    expect(location.hash).toBe(nextTab.hash);
+  });
+
+  test('only related tab is selected', () => {
+    expect(nextTab.getAttribute("aria-selected") === "true").toBeTruthy();
+    expect(global.tabs.filter(t => t.getAttribute("aria-selected") === "false")).toHaveLength(global.tabs.length - 1);
+  });
+
+  test('only related panel is shown', () => {
+    const tabpanel = global.tabpanels.find(tp => tp.getAttribute("aria-labelledby") === nextTab.id);
+    expect(tabpanel.hasAttribute("hidden")).toBeFalsy();
+    expect(global.tabpanels.filter(tp => tp.hasAttribute("hidden"))).toHaveLength(global.tabpanels.length - 1);
+  });
+});
