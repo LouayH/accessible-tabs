@@ -15,6 +15,8 @@ const shuffleArray = (array) => {
   return _array;
 }
 
+const initialLocation = location;
+
 document.body.innerHTML = `
   <nav>
     <ul role="tablist" class="tab-list" aria-label="Pages">
@@ -101,12 +103,9 @@ beforeAll(() => {
   global.firstTab = tabs[0];
   global.lastTab = tabs[tabs.length - 1];
 
-  global.setSelectedTab = (tab) => {
-    if(tab) {
-      tab.clicked();
-    }
-
-    const tabHash = tab.hash;
+  global.setSelectedTab = () => {
+    // get tab hash from url
+    const tabHash = location.hash;
     
     global.tabpanels.forEach((tp) => {
       const tabpanelID = tp.id;
@@ -144,8 +143,7 @@ beforeAll(() => {
 
   global.tabs.forEach((tab, tabIndex) => {
     tab.addEventListener("click", function () {
-      tab.clicked = jest.fn();
-      setSelectedTab(tab);
+      location.assign(`${location.origin}/${tab.hash}`);
     });
     
     tab.addEventListener("keydown", function (e) {
@@ -191,4 +189,24 @@ beforeAll(() => {
 
   global.tab2 = shuffledTabs[1];
   global.tab2Index = global.tabs.findIndex(t => t.id === global.tab2.id);
+
+  delete window.location;
+
+  location = Object.defineProperties(
+    {},
+    {
+      ...Object.getOwnPropertyDescriptors(initialLocation),
+      assign: {
+        configurable: true,
+        value: (value) => {
+          location.href = value;
+          setSelectedTab();
+        },
+      },
+    },
+  );
+});
+
+afterAll(() => {
+  location = initialLocation;
 });

@@ -29,7 +29,7 @@ describe('click random tab 1', () => {
 
   test('trigger click method of the tab', () => {
     tab.click();
-    expect(tab.clicked).toHaveBeenCalled();
+    expect(location.hash).toBe(tab.hash);
   });
   
   test('only clicked tab is selected', () => {
@@ -88,7 +88,7 @@ describe('click random tab 2', () => {
 
   test('trigger click method of the tab', () => {
     tab.click();
-    expect(tab.clicked).toHaveBeenCalled();
+    expect(location.hash).toBe(tab.hash);
   });
   
   test('only clicked tab is selected', () => {
