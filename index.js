@@ -40,6 +40,11 @@ tabs.forEach((tab, tabIndex) => {
   tab.addEventListener("keydown", function (e) {
     e.preventDefault();
     
+    // activate tab with space key press
+    if ((e.keyCode || e.which) === 32) {
+      tab.click();
+    }
+    
     // focus the last tab with end key press
     if ((e.keyCode || e.which) === 35) {
       lastTab.focus();
