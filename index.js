@@ -4,8 +4,9 @@ const tabpanels = [...document.querySelectorAll(".tab-panel")];
 const firstTab = tabs[0];
 const lastTab = tabs[tabs.length - 1];
 
-const setSelectedTab = (tab) => {
-  const tabHash = tab.hash;
+const setSelectedTab = () => {
+  // get tab hash from url
+  const tabHash = location.hash;
   
   tabpanels.forEach((tp) => {
     const tabpanelID = tp.id;
@@ -49,11 +50,11 @@ onresize = function () {
   initiateNav();
 };
 
+onhashchange = function () {
+  setSelectedTab();
+};
+
 tabs.forEach((tab, tabIndex) => {
-  tab.addEventListener("click", function () {
-    setSelectedTab(tab);
-  });
-  
   tab.addEventListener("keydown", function (e) {
     e.preventDefault();
 
