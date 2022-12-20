@@ -1,3 +1,20 @@
+const shuffleArray = (array) => {
+  const _array = [...array];
+
+  for(let i = 0; i < _array.length; i++) {
+    const currentItem = _array[i];
+
+    const randomIndex = Math.floor(Math.random() * _array.length);
+    const randomItem = _array[randomIndex];
+
+    const tempItem = currentItem;
+    _array[i] = randomItem;
+    _array[randomIndex] = tempItem;
+  }
+
+  return _array;
+}
+
 document.body.innerHTML = `
   <nav>
     <ul role="tablist" class="tab-list" aria-label="Pages">
@@ -85,6 +102,10 @@ beforeAll(() => {
   global.lastTab = tabs[tabs.length - 1];
 
   global.setSelectedTab = (tab) => {
+    if(tab) {
+      tab.clicked();
+    }
+
     const tabHash = tab.hash;
     
     global.tabpanels.forEach((tp) => {
@@ -123,6 +144,7 @@ beforeAll(() => {
 
   global.tabs.forEach((tab, tabIndex) => {
     tab.addEventListener("click", function () {
+      tab.clicked = jest.fn();
       setSelectedTab(tab);
     });
     
@@ -160,4 +182,13 @@ beforeAll(() => {
       }
     });
   });
+
+  // elect 2 randoms tabs to test them
+  const shuffledTabs = shuffleArray(global.tabs);
+
+  global.tab1 = shuffledTabs[0];
+  global.tab1Index = global.tabs.findIndex(t => t.id === global.tab1.id);
+
+  global.tab2 = shuffledTabs[1];
+  global.tab2Index = global.tabs.findIndex(t => t.id === global.tab2.id);
 });
