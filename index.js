@@ -40,6 +40,16 @@ tabs.forEach((tab, tabIndex) => {
   tab.addEventListener("keydown", function (e) {
     e.preventDefault();
     
+    // focus the last tab with end key press
+    if ((e.keyCode || e.which) === 35) {
+      lastTab.focus();
+    }
+    
+    // focus the first tab with home key press
+    if ((e.keyCode || e.which) === 36) {
+      firstTab.focus();
+    }
+    
     // focus the previous tab with left arrow key press
     if ((e.keyCode || e.which) === 37) {
       if (tab === firstTab) {
