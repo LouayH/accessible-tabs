@@ -44,6 +44,13 @@ const initiateNav = () => {
 
 onload = function () {
   initiateNav();
+
+  if(location.hash) {
+    // allow time to render content before set selected tab
+    setTimeout(() => {
+      setSelectedTab();
+    }, 100);
+  }
 };
 
 onresize = function () {
