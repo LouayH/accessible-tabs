@@ -1,6 +1,7 @@
 :root {
   --grullo: #A99985;
   --isabelline: #F5F1ED;
+  --raisin-black: #252323;
 }
 
 body {
@@ -46,6 +47,12 @@ nav {
   text-decoration: none;
   padding-block: 4px;
   padding-inline: 8px;
+  color: var(--isabelline);
+}
+
+.tab-item[aria-selected="true"] {
+  outline: 1px solid transparent;
+  background-color: var(--raisin-black);
   color: var(--isabelline);
 }
 
