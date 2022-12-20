@@ -1,3 +1,4 @@
+const tablists = [...document.querySelectorAll(".tab-list")];
 const tabs = [...document.querySelectorAll(".tab-item")];
 const tabpanels = [...document.querySelectorAll(".tab-panel")];
 const firstTab = tabs[0];
@@ -30,6 +31,22 @@ const setSelectedTab = (tab) => {
       t.setAttribute("aria-selected", "false");
     }
   });
+};
+
+const initiateNav = () => {
+  const orientation = innerWidth > 768 ? "horizontal" : "vertical";
+  
+  tablists.forEach((tl) => {
+    tl.setAttribute("aria-orientation", orientation);
+  });
+};
+
+onload = function () {
+  initiateNav();
+};
+
+onresize = function () {
+  initiateNav();
 };
 
 tabs.forEach((tab, tabIndex) => {
