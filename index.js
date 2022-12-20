@@ -56,6 +56,10 @@ tabs.forEach((tab, tabIndex) => {
   
   tab.addEventListener("keydown", function (e) {
     e.preventDefault();
+
+    const isVerticalOrientation = tablists.every(tl => {
+      return tl.getAttribute("aria-orientation") === "vertical";
+    });
     
     // activate tab with space key press
     if ((e.keyCode || e.which) === 32) {
@@ -82,8 +86,28 @@ tabs.forEach((tab, tabIndex) => {
       }
     }
     
+    // focus the previous tab with top arrow key press if orientation is vertical 
+    if ((e.keyCode || e.which) === 38 && isVerticalOrientation) {
+      if (tab === firstTab) {
+        lastTab.focus();
+      } else {
+        const previousTabIndex = tabIndex - 1;
+        tabs[previousTabIndex].focus();
+      }
+    }
+    
     // focus the next tab with right arrow key press
     if ((e.keyCode || e.which) === 39) {
+      if (tab === lastTab) {
+        firstTab.focus();
+      } else {
+        const nextTabIndex = tabIndex + 1;
+        tabs[nextTabIndex].focus();
+      }
+    }
+    
+    // focus the next tab with down arrow key press if orientation is vertical 
+    if ((e.keyCode || e.which) === 40 && isVerticalOrientation) {
       if (tab === lastTab) {
         firstTab.focus();
       } else {
