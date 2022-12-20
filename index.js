@@ -1,5 +1,7 @@
 const tabs = [...document.querySelectorAll(".tab-item")];
 const tabpanels = [...document.querySelectorAll(".tab-panel")];
+const firstTab = tabs[0];
+const lastTab = tabs[tabs.length - 1];
 
 const setSelectedTab = (tab) => {
   const tabHash = tab.hash;
@@ -30,8 +32,32 @@ const setSelectedTab = (tab) => {
   });
 };
 
-tabs.forEach((tab) => {
+tabs.forEach((tab, tabIndex) => {
   tab.addEventListener("click", function () {
     setSelectedTab(tab);
+  });
+  
+  tab.addEventListener("keydown", function (e) {
+    e.preventDefault();
+    
+    // focus the previous tab with left arrow key press
+    if ((e.keyCode || e.which) === 37) {
+      if (tab === firstTab) {
+        lastTab.focus();
+      } else {
+        const previousTabIndex = tabIndex - 1;
+        tabs[previousTabIndex].focus();
+      }
+    }
+    
+    // focus the next tab with right arrow key press
+    if ((e.keyCode || e.which) === 39) {
+      if (tab === lastTab) {
+        firstTab.focus();
+      } else {
+        const nextTabIndex = tabIndex + 1;
+        tabs[nextTabIndex].focus();
+      }
+    }
   });
 });

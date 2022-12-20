@@ -2,6 +2,7 @@
   --grullo: #A99985;
   --isabelline: #F5F1ED;
   --raisin-black: #252323;
+  --slate-grey: #70798C;
 }
 
 body {
@@ -53,6 +54,12 @@ nav {
 .tab-item[aria-selected="true"] {
   outline: 1px solid transparent;
   background-color: var(--raisin-black);
+  color: var(--isabelline);
+}
+
+.tab-item:focus-visible {
+  outline: 1px solid transparent;
+  background-color: var(--slate-grey);
   color: var(--isabelline);
 }
 
